@@ -19,7 +19,7 @@ namespace ID3
 
             foreach (DataRow aRow in samples.Rows)
             {
-                if ((bool)aRow[mTargetAttribute] == true)
+                if (aRow[mTargetAttribute].Equals("True"))
                     result++;
             }
 
@@ -49,7 +49,7 @@ namespace ID3
             foreach (DataRow aRow in samples.Rows)
             {
                 if (((string)aRow[attribute.AttributeName] == value))
-                    if ((bool)aRow[mTargetAttribute] == true)
+                    if (aRow[mTargetAttribute].Equals("True"))
                         positives++;
                     else
                         negatives++;
@@ -95,7 +95,7 @@ namespace ID3
         {
             foreach (DataRow row in samples.Rows)
             {
-                if ((bool)row[targetAttribute] == false)
+                if (row[targetAttribute].Equals("False"))
                     return false;
             }
 
@@ -106,7 +106,7 @@ namespace ID3
         {
             foreach (DataRow row in samples.Rows)
             {
-                if ((bool)row[targetAttribute] == true)
+                if (row[targetAttribute].Equals("True"))
                     return false;
             }
 
@@ -179,7 +179,6 @@ namespace ID3
                 aSample.Rows.Clear();
 
                 DataRow[] rows = samples.Select(bestAttribute.AttributeName + " = " + "'" + value + "'");
-
                 foreach (DataRow row in rows)
                 {
                     aSample.Rows.Add(row.ItemArray);

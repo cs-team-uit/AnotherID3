@@ -90,17 +90,17 @@ namespace ID3
 
         private void Run_Click(object sender, RoutedEventArgs e)
         {
-            Attribute hair = new Attribute("Màu tóc", new string[] { "Đen", "Râm", "Bạc" });
-            Attribute height = new Attribute("Chiều cao", new string[] { "Thấp", "Tầm thước", "Cao" });
-            Attribute weight = new Attribute("Cân nặng", new string[] { "Nhẹ", "Vừa phải", "Cao" });
-            Attribute cream = new Attribute("Dùng thuốc", new string[] { "Có", "Không" });
+            Attribute hair = new Attribute("HairColor", new string[] { "Black", "Gray", "Silver" });
+            Attribute height = new Attribute("Height", new string[] { "Short", "Medium", "High" });
+            Attribute weight = new Attribute("Weight", new string[] { "Light", "Medium", "Heavy" });
+            Attribute cream = new Attribute("Cream", new string[] { "Yes", "No" });
 
             Attribute[] attributes = new Attribute[] { hair, height, weight, cream };
 
             DataTable samples = datatable;
 
             DecisionTree id3 = new DecisionTree();
-            TreeNode root = id3.mountTree(samples, "Kết quả", attributes);
+            TreeNode root = id3.mountTree(samples, "Result", attributes);
 
             DecisionTree.printNode(root, "");
         }

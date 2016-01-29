@@ -110,7 +110,26 @@ namespace ID3
 
         private void About_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Phần mềm mô phỏng cây định danh ID3\nSinh viên: \nNguyễn Trần Minh Tân - 13520747 \nPhạm Hồ Lê Nguyễn-13520566", "About", MessageBoxButton.OK);
+            MessageBox.Show("Phần mềm mô phỏng cây định danh ID3\nSinh viên: \nNguyễn Trần Minh Tân - 13520747 \nPhạm Hồ Lê Nguyễn - 13520566", "About", MessageBoxButton.OK);
+        }
+        void DumpVisualTree(TreeViewItem parentNode, TreeNode root)
+        {
+            TreeViewItem item = new TreeViewItem();
+            item.Header = ": " + root.attribute.ToString();
+            parentNode.Items.Add(item);
+
+            int count = root.totalChilds;
+            if (root.attribute.values != null)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    item = new TreeViewItem();
+                    item.Header = ": " + root.attribute.values[i].ToString();
+                    parentNode.Items.Add(item);
+                    TreeNode child = root.getChild(i);
+                    DumpVisualTree(item, child);
+                }
+            }
         }
         private void Run_Click(object sender, RoutedEventArgs e)
         {
@@ -127,6 +146,7 @@ namespace ID3
 
                 DecisionTree id3 = new DecisionTree();
                 TreeNode root = id3.mountTree(samples, "Result", attributes);
+                TreeNode root1 = root;
                 var decisiontree = new DecisionTree();
                 decisiontree.SearchRule(root);
                 RuleID3 = decisiontree.RuleID3;  
@@ -138,8 +158,16 @@ namespace ID3
                 }
                 lvRule.ItemsSource = ListRule;
                 DecisionTree.printNode(root, "     ");
-                MenuItem tree = DecisionTree.treeroot;
-                tvDecisionTree.Items.Add(tree);
+
+                tvDecisionTree.Items.Clear();
+                TreeViewItem item = new TreeViewItem();
+                item.Header = "Logical Tree";
+
+                DumpVisualTree(item, root1);
+
+                tvDecisionTree.Items.Add(item);
+                item.ExpandSubtree();
+
                 txtTree.Text = DecisionTree.TreeList;
             }
             else

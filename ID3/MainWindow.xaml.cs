@@ -30,12 +30,31 @@ namespace ID3
         bool isLoad;
         public List<string> RuleID3 = new List<string>();
         List<string> ListRule = new List<string>();
+
       
         public MainWindow()
         {
+            
             InitializeComponent();
+            InitPredictItems();
         }
+        public void InitPredictItems()
+        {
+            haircolor.Items.Add("Black");
+            haircolor.Items.Add("Gray");
+            haircolor.Items.Add("Silver");
 
+            height.Items.Add("Short");
+            height.Items.Add("Medium");
+            height.Items.Add("Tall");
+
+            weight.Items.Add("Light");
+            weight.Items.Add("Medium");
+            weight.Items.Add("Heavy");
+
+            cream.Items.Add("No");
+            cream.Items.Add("Yes");
+        }
         private void Open_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -118,11 +137,72 @@ namespace ID3
                     i++;
                 }
                 lvRule.ItemsSource = ListRule;
-                DecisionTree.printNode(root, "");
                 
             }
             else
                 MessageBox.Show("Data must load before run", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
+        private void btnPredict_Click(object sender, RoutedEventArgs e)
+        {
+            bool[] attr = new bool[4] {false, false,false,false };
+            if (isLoad)
+            {
+                string _haircolor = haircolor.SelectedValue.ToString();
+                string _height = height.SelectedValue.ToString();
+                string _weight = weight.SelectedValue.ToString();
+                string _cream = cream.SelectedValue.ToString();
+
+                foreach (var _rule in RuleID3)
+                {
+                    if (_rule.Contains("HairColor"))
+                    {
+                        if (_rule.Contains("HairColor =  "+_haircolor))
+                            attr[0] = true;
+                        else
+                            attr[0] = false;
+                    }
+                    else
+                        attr[0] = true;
+                    if (_rule.Contains("Height"))
+                    {
+                        if (_rule.Contains("Height =  " + _height))
+                            attr[1] = true;
+                        else
+                            attr[1] = false;
+                    }
+                    else
+                        attr[1] = true;
+                    if (_rule.Contains("Weight"))
+                    {
+                        if (_rule.Contains("Weight =  "+ _weight))
+                            attr[2] = true;
+                        else
+                            attr[2] = false;
+                    }
+                    else
+                        attr[2] = true;
+                    if (_rule.Contains("Cream"))
+                    {
+                        if (_rule.Contains("Cream =  " + _cream))
+                            attr[3] = true;
+                        else
+                            attr[3] = false;
+                    }
+                    else
+                        attr[3] = true;
+                    if (attr[0] == true && attr[1]==true && attr[2]==true && attr[3]==true)
+                    {
+                        if (_rule.Contains("True"))
+                            txtResult.Text = "True";
+                        else if (_rule.Contains("False"))
+                            txtResult.Text = "False";
+                        return;
+                    }
+                }
+                
+
+            }       
         }
     }
 }

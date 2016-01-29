@@ -231,42 +231,7 @@ namespace ID3
             return internalMountTree(mSamples, targetAttribute, attributes);
             
         }
-        public static void printNode(TreeNode root, string tabs)
-        {
-            //if (flag == 0)
-            //{
-            //    Rules[k] = "IF {" + root.attribute.AttributeName + " = ";
-            //    flag = 1;
-            //}
-            //else
-            //{
-            //    if (root.attribute.AttributeName.Equals("") && (root.attribute.mLabel.ToString().Equals("True") || root.attribute.mLabel.ToString().Equals("False")))
-            //        Rules[k] += "} THEN " + root.attribute.mLabel.ToString();
-            //    else 
-            //    {
-            //        Rules[k] += " and " + root.attribute.AttributeName + " = ";
-            //    }
-            //}         
-            //Console.WriteLine(tabs + '|' + root.attribute + '|');
-            
-            //if (root.attribute.values != null)
-            //{
-            //    for (int i = 0; i < root.attribute.values.Length; i++)
-            //    {
-            //        Console.WriteLine(tabs + "\t" + "<" + root.attribute.values[i] + ">");
-            //        Rules[i] += root.attribute.values[i];
-            //        TreeNode childNode = root.getChildByBranchName(root.attribute.values[i]);
-            //        printNode(childNode, "\t" + tabs);
-            //    }
-            //}
-            //else
-            //{
-            //   k++;
-            //   flag = 0;
-            //}
-            
-           
-        }
+       
         private bool PrintRule(TreeNode root)
         {
             SearchRule(root);

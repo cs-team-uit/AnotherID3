@@ -12,7 +12,28 @@ namespace ID3
         private int mTotal = 0;
         private string mTargetAttribute = "result";
         private double mEntropySet = 0.0;
-
+        public static string[] Rules = new string[] { "", "", "", "", "", "", "", "", "", "", "", "", ""};
+        public static int k = 0;
+        public static int flag = 0;
+        int _depth;
+        public List<string> RuleID3 = new List<string>();
+        public int RuleCount; public int temp;
+        string _solution; string _solution1; string _Rule;
+        public string Solution
+        {
+            get { return _solution; }
+            set { _solution = value; }
+        }
+        public string Solution1
+        {
+            get { return _solution1; }
+            set { _solution1 = value; }
+        }
+        public string Rule
+        {
+            get { return _Rule; }
+            set { _Rule = value; }
+        }
         private int countTotalPositives(DataTable samples)
         {
             int result = 0;
@@ -22,7 +43,6 @@ namespace ID3
                 if (aRow[mTargetAttribute].Equals("True"))
                     result++;
             }
-
             return result;
         }
         private double calcEntropy(int positives, int negatives)
@@ -203,27 +223,92 @@ namespace ID3
                 }
             }
 
+
+            
             return root;
+
         }
 
         public TreeNode mountTree(DataTable samples, string targetAttribute, Attribute[] attributes)
         {
-            mSamples = samples;
+            mSamples = samples;       
             return internalMountTree(mSamples, targetAttribute, attributes);
+            
         }
         public static void printNode(TreeNode root, string tabs)
         {
-            Console.WriteLine(tabs + '|' + root.attribute + '|');
-
-            if (root.attribute.values != null)
+            //if (flag == 0)
+            //{
+            //    Rules[k] = "IF {" + root.attribute.AttributeName + " = ";
+            //    flag = 1;
+            //}
+            //else
+            //{
+            //    if (root.attribute.AttributeName.Equals("") && (root.attribute.mLabel.ToString().Equals("True") || root.attribute.mLabel.ToString().Equals("False")))
+            //        Rules[k] += "} THEN " + root.attribute.mLabel.ToString();
+            //    else 
+            //    {
+            //        Rules[k] += " and " + root.attribute.AttributeName + " = ";
+            //    }
+            //}         
+            //Console.WriteLine(tabs + '|' + root.attribute + '|');
+            
+            //if (root.attribute.values != null)
+            //{
+            //    for (int i = 0; i < root.attribute.values.Length; i++)
+            //    {
+            //        Console.WriteLine(tabs + "\t" + "<" + root.attribute.values[i] + ">");
+            //        Rules[i] += root.attribute.values[i];
+            //        TreeNode childNode = root.getChildByBranchName(root.attribute.values[i]);
+            //        printNode(childNode, "\t" + tabs);
+            //    }
+            //}
+            //else
+            //{
+            //   k++;
+            //   flag = 0;
+            //}
+            
+           
+        }
+        private bool PrintRule(TreeNode root)
+        {
+            SearchRule(root);
+            return true;
+        }
+        public void SearchRule(TreeNode Rule)
+        {
+            if (Rule.attribute.values != null)
             {
-                for (int i = 0; i < root.attribute.values.Length; i++)
+                string temp1 = "";
+                Solution1 += Rule.attribute.AttributeName + " = ";
+                temp1 += Solution1 + " ";
+                for (int i = 0; i < Rule.attribute.values.Length; i++)
                 {
-                    Console.WriteLine(tabs + "\t" + "<" + root.attribute.values[i] + ">");
-                    TreeNode childNode = root.getChildByBranchName(root.attribute.values[i]);
-                    printNode(childNode, "\t" + tabs);
+                    string temp2 = "";
+                    temp2 = temp1 + Rule.attribute.values[i] + ", ";
+                    TreeNode childNode = Rule.getChildByBranchName(Rule.attribute.values[i]);
+                    if (childNode.attribute.values == null)
+                    {
+                        RuleCount++;
+                        Solution1 = temp2 + "} THEN {" + childNode.attribute.mLabel + "}";
+                        RuleID3.Add(Solution1);
+                    }
+                    else
+                    {
+                        if (Rule.attribute.values == null)
+                        {
+                            SearchRule(childNode);
+                        }
+                        else
+                        {
+                            Solution1 = temp2;
+                            SearchRule(childNode);
+                        }
+                    }
                 }
             }
         }
+
     }
 }

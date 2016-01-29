@@ -12,7 +12,7 @@ namespace ID3
     {
         ArrayList mValues;
         string mName;
-        object mLabel;
+        public object mLabel;
 
         public Attribute(string name, string[] values)
         {

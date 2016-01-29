@@ -27,6 +27,7 @@ namespace ID3
     public partial class MainWindow : Window
     {
         DataTable datatable;
+        bool isLoad;
         public MainWindow()
         {
             InitializeComponent();
@@ -35,6 +36,7 @@ namespace ID3
         private void Open_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Excel files (*.xls;*.xlsx)|*.xls;*.xlsx|All files (*.*)|*.*";
             if (openFileDialog.ShowDialog(this) == true)
             {
                 string filename = openFileDialog.FileName;
@@ -71,6 +73,7 @@ namespace ID3
                     excelApp.Quit();
                     Input.DataContext = dt.DefaultView;
                     datatable = dt;
+                    isLoad = true;
                     
                 }
             }
@@ -90,19 +93,25 @@ namespace ID3
 
         private void Run_Click(object sender, RoutedEventArgs e)
         {
-            Attribute hair = new Attribute("HairColor", new string[] { "Black", "Gray", "Silver" });
-            Attribute height = new Attribute("Height", new string[] { "Short", "Medium", "High" });
-            Attribute weight = new Attribute("Weight", new string[] { "Light", "Medium", "Heavy" });
-            Attribute cream = new Attribute("Cream", new string[] { "Yes", "No" });
+            if (isLoad == true)
+            {
+                Attribute hair = new Attribute("HairColor", new string[] { "Black", "Gray", "Silver" });
+                Attribute height = new Attribute("Height", new string[] { "Short", "Medium", "High" });
+                Attribute weight = new Attribute("Weight", new string[] { "Light", "Medium", "Heavy" });
+                Attribute cream = new Attribute("Cream", new string[] { "Yes", "No" });
 
-            Attribute[] attributes = new Attribute[] { hair, height, weight, cream };
+                Attribute[] attributes = new Attribute[] { hair, height, weight, cream };
 
-            DataTable samples = datatable;
+                DataTable samples = datatable;
 
-            DecisionTree id3 = new DecisionTree();
-            TreeNode root = id3.mountTree(samples, "Result", attributes);
+                DecisionTree id3 = new DecisionTree();
+                TreeNode root = id3.mountTree(samples, "Result", attributes);
 
-            DecisionTree.printNode(root, "");
+                DecisionTree.printNode(root, "");
+                
+            }
+            else
+                MessageBox.Show("Data must load before run", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }

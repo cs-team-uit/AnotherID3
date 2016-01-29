@@ -50,6 +50,14 @@
         <Button Name="btnPredict" Content="Predict" HorizontalAlignment="Left" Margin="542,612,0,0" VerticalAlignment="Top" Width="75" Click="btnPredict_Click"/>
         <TextBox Name="txtResult" HorizontalAlignment="Left" Height="30" Margin="722,612,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" DataContext="{Binding}"/>
         <Label Content="Result" HorizontalAlignment="Left" Height="30" Margin="645,612,0,0" VerticalAlignment="Top" Width="53" FontWeight="ExtraBlack" FontSize="14"/>
+        <TreeView Name="tvDecisionTree" HorizontalAlignment="Left" Height="70" Margin="542,358,0,0" VerticalAlignment="Top" Width="591">
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate DataType="{x:Type MenuItem}" ItemsSource="{Binding Items}">
+                    <TextBlock Text="{Binding Title}" />
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
+        <TextBox Name="txtTree" HorizontalAlignment="Left" Height="261" Margin="542,92,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="591"/>
 
     </Grid>
 

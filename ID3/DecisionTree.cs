@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Collections;
 using System.Data;
+using System.IO;
+using System.Collections.ObjectModel;
     
 namespace ID3
 {
@@ -19,6 +21,9 @@ namespace ID3
         public List<string> RuleID3 = new List<string>();
         public int RuleCount; public int temp;
         string _solution; string _solution1; string _Rule;
+        public static MenuItem treeroot = new MenuItem();
+        public static MenuItem childtree = new MenuItem();
+        public static string TreeList = "";
         public string Solution
         {
             get { return _solution; }
@@ -231,12 +236,23 @@ namespace ID3
             return internalMountTree(mSamples, targetAttribute, attributes);
             
         }
-       
-        private bool PrintRule(TreeNode root)
+        public static void printNode(TreeNode root, string tabs)
         {
-            SearchRule(root);
-            return true;
+           
+            Console.WriteLine(tabs + '|' + root.attribute + '|');
+            TreeList += "\n" + tabs + '|' + root.attribute + '|';
+            if (root.attribute.values != null)
+            {
+                for (int i = 0; i < root.attribute.values.Length; i++)
+                {
+                    Console.WriteLine(tabs + "\t" + "<" + root.attribute.values[i] + ">");
+                    TreeList += "\n" + tabs + "\t" + "<" + root.attribute.values[i] + ">";
+                    TreeNode childNode = root.getChildByBranchName(root.attribute.values[i]);
+                    printNode(childNode, "\t" + tabs);
+                }
+            }
         }
+         
         public void SearchRule(TreeNode Rule)
         {
             if (Rule.attribute.values != null)

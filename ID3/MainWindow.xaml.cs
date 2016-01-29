@@ -137,7 +137,10 @@ namespace ID3
                     i++;
                 }
                 lvRule.ItemsSource = ListRule;
-                
+                DecisionTree.printNode(root, "     ");
+                MenuItem tree = DecisionTree.treeroot;
+                tvDecisionTree.Items.Add(tree);
+                txtTree.Text = DecisionTree.TreeList;
             }
             else
                 MessageBox.Show("Data must load before run", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -199,10 +202,10 @@ namespace ID3
                             txtResult.Text = "False";
                         return;
                     }
-                }
-                
-
-            }       
+                }              
+            }
+            else
+                MessageBox.Show("Data must load before run", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }

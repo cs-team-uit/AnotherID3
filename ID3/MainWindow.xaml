@@ -28,6 +28,14 @@
             </TextBox>
         </DockPanel>
         <Label Content="Input Data" HorizontalAlignment="Left" Margin="10,61,0,0" VerticalAlignment="Top" Width="74" Height="26" FontWeight="Bold"/>
+        <ListView Name="lvRule" HorizontalAlignment="Left" Height="217" Margin="10,562,0,0" VerticalAlignment="Top" Width="513" ItemsSource="{Binding}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Label Content="Rule" HorizontalAlignment="Left" Height="39" Margin="10,518,0,0" VerticalAlignment="Top" Width="114" FontWeight="ExtraBlack" FontSize="14"/>
 
     </Grid>
 

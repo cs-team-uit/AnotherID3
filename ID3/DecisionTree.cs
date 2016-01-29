@@ -221,12 +221,8 @@ namespace ID3
                     TreeNode ChildNode = dc3.mountTree(aSample, targetAttribute, (Attribute[])aAttributes.ToArray(typeof(Attribute)));
                     root.AddTreeNode(ChildNode, value);
                 }
-            }
-
-
-            
+            }       
             return root;
-
         }
 
         public TreeNode mountTree(DataTable samples, string targetAttribute, Attribute[] attributes)

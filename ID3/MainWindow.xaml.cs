@@ -28,6 +28,9 @@ namespace ID3
     {
         DataTable datatable;
         bool isLoad;
+        public List<string> RuleID3 = new List<string>();
+        List<string> ListRule = new List<string>();
+      
         public MainWindow()
         {
             InitializeComponent();
@@ -90,7 +93,6 @@ namespace ID3
         {
             MessageBox.Show("Phần mềm mô phỏng cây định danh ID3\nSinh viên: \nNguyễn Trần Minh Tân - 13520747 \nPhạm Hồ Lê Nguyễn-13520566", "About", MessageBoxButton.OK);
         }
-
         private void Run_Click(object sender, RoutedEventArgs e)
         {
             if (isLoad == true)
@@ -106,7 +108,16 @@ namespace ID3
 
                 DecisionTree id3 = new DecisionTree();
                 TreeNode root = id3.mountTree(samples, "Result", attributes);
-
+                var decisiontree = new DecisionTree();
+                decisiontree.SearchRule(root);
+                RuleID3 = decisiontree.RuleID3;  
+                int i = 1;
+                foreach (var rule in RuleID3)
+                {
+                    ListRule.Add("Rule [" +i+ "]: IF {" + rule);
+                    i++;
+                }
+                lvRule.ItemsSource = ListRule;
                 DecisionTree.printNode(root, "");
                 
             }
